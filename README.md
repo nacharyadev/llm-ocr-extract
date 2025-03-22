@@ -1,6 +1,6 @@
-# FastAPI Hello World
+# FastAPI OCR Extraction
 
-A simple Hello World REST API built with FastAPI with file upload and text extraction capabilities using multiple Vision APIs (Claude, Google Cloud Vision, and OpenAI).
+A simple OCR extraction REST API built with FastAPI with file upload and text extraction capabilities using multiple Vision APIs (Claude, Google Gemini, and OpenAI).
 
 ## Setup
 
@@ -20,8 +20,8 @@ pip install -r requirements.txt
 # For Claude API
 export ANTHROPIC_API_KEY='your-claude-api-key-here'
 
-# For Google Cloud Vision API
-export GOOGLE_APPLICATION_CREDENTIALS='path/to/your/google-credentials.json'
+# For Google Gemini API
+export GEMINI_API_KEY='path/to/your/google-credentials.json'
 
 # For OpenAI API
 export OPENAI_API_KEY='your-openai-api-key-here'
@@ -99,7 +99,7 @@ Uploaded files are stored in the `uploads` directory in your project folder. Mak
 - FastAPI: Web framework
 - Uvicorn: ASGI server
 - Anthropic: Claude API client
-- Google Cloud Vision: Google's Vision API client
+- Google Gemini API: Google's Gemini API client
 - OpenAI: OpenAI API client
 - PyMuPDF: PDF text extraction
 - Python-multipart: File upload handling
@@ -107,7 +107,7 @@ Uploaded files are stored in the `uploads` directory in your project folder. Mak
 ## Environment Variables
 
 - `ANTHROPIC_API_KEY`: Your Anthropic API key for Claude's Vision API
-- `GOOGLE_APPLICATION_CREDENTIALS`: Path to your Google Cloud credentials JSON file
+- `GEMINI_API_KEY`: Path to your Google GEMINI API key 
 - `OPENAI_API_KEY`: Your OpenAI API key for Vision API
 
 Deactivate and reinstall:
