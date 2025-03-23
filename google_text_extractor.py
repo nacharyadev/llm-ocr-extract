@@ -52,7 +52,7 @@ class GoogleVisionTextExtractor:
             response = self.client.models.generate_content(
                 model="gemini-2.0-flash-exp",
                 contents=[
-                    """Extract all the text content from the attached image of a packing slip. Return the result in a JSON format:
+                    """Extract all the text content from the attached image of a packing slip. Return the result in a strict JSON format:
                     
                     Use this JSON schema:
                     Item = {'itemName': str, 'itemQuantity': int, 'itemPrice': float}

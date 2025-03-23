@@ -1,12 +1,13 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.responses import JSONResponse
 import os
-from typing import List
+from typing import List, Optional
 import shutil
 from claude_text_extractor import TextExtractor
 from google_text_extractor import GoogleVisionTextExtractor
 from openai_text_extractor import OpenAIVisionTextExtractor
-print("hello world")
+from purchase_orders import PurchaseOrder, PurchaseOrderList, parse_purchase_order
+
 app = FastAPI()
 
 # Create uploads directory if it doesn't exist
@@ -34,7 +35,7 @@ async def root():
 
 @app.get("/hello/{name}")
 async def say_hello(name: str):
-    return {"message": f"Hello {name}"}
+    return {"message": f"good morning {name}! How are you doing today?"}
 
 @app.post("/upload/image/claude")
 async def upload_image_claude(file: UploadFile = File(...)):
@@ -85,6 +86,12 @@ async def upload_image_google(file: UploadFile = File(...)):
             shutil.copyfileobj(file.file, file_object)
         
         extracted_text = google_extractor.extract_text(file_location)
+        print(extracted_text)
+        purchase_order: Optional[PurchaseOrder] = parse_purchase_order(extracted_text)
+        print(purchase_order)
+        if purchase_order:
+            purchase_order = PurchaseOrderList().get_purchase_order(purchase_order.purchaseOrderNumber)
+            print(purchase_order)
         
         return JSONResponse(
             content={
@@ -93,7 +100,8 @@ async def upload_image_google(file: UploadFile = File(...)):
                 "content_type": file.content_type,
                 "file_size": os.path.getsize(file_location),
                 "extracted_text": extracted_text,
-                "extractor": "google"
+                "extractor": "google",
+                "purchase_order": purchase_order.to_dict() if purchase_order else None
             },
             status_code=200
         )
